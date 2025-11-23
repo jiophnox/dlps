@@ -275,36 +275,14 @@ async function convertToMP3(inputPath, outputPath) {
 // ✅ Update getYtDlpPath function in index.js
 
 function getYtDlpPath() {
-  // Priority order for Render deployment
-  const possiblePaths = [
-    process.env.YTDLP_PATH, // /opt/render/project/src/bin/yt-dlp
-    path.join(__dirname, 'bin', 'yt-dlp'), // ./bin/yt-dlp
-    '/opt/render/project/src/bin/yt-dlp', // Render absolute path
-    'yt-dlp', // System PATH
-    '/usr/local/bin/yt-dlp',
-    '/usr/bin/yt-dlp',
-  ];
+  const binPath = path.join(process.cwd(), 'bin', 'yt-dlp');
   
-  for (const p of possiblePaths) {
-    if (!p) continue;
-    
-    try {
-      if (fs.existsSync(p)) {
-        console.log(`✅ Found yt-dlp at: ${p}`);
-        // Make executable
-        try {
-          fs.chmodSync(p, 0o755);
-        } catch (e) {
-          // Ignore chmod errors
-        }
-        return p;
-      }
-    } catch (e) {
-      // Continue checking
-    }
+  if (fs.existsSync(binPath)) {
+    console.log(`✅ Using yt-dlp from: ${binPath}`);
+    return binPath;
   }
   
-  console.log("⚠️ Using default 'yt-dlp' (must be in PATH)");
+  console.log("⚠️ Fallback to system yt-dlp");
   return 'yt-dlp';
 }
 

@@ -1,0 +1,27 @@
+services:
+  - type: web
+    name: youtube-downloader-bot
+    env: node
+    region: oregon
+    plan: free
+    buildCommand: chmod +x ./scripts/install.sh && ./scripts/install.sh
+    startCommand: node index.js
+    envVars:
+      - key: NODE_VERSION
+        value: 18.17.0
+      - key: API_ID
+        sync: false
+      - key: API_HASH
+        sync: false
+      - key: BOT_TOKEN
+        sync: false
+      - key: MAX_FILE_SIZE
+        value: 2000
+      - key: PORT
+        value: 10000
+      - key: YTDLP_PATH
+        value: /opt/render/project/src/bin/yt-dlp
+      - key: FFMPEG_PATH
+        value: /usr/bin/ffmpeg
+      - key: FFPROBE_PATH
+        value: /usr/bin/ffprobe

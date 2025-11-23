@@ -1,24 +1,13 @@
 {
   "name": "youtube-downloader-bot",
   "version": "2.0.0",
-  "description": "Ultra-fast YouTube video/audio downloader bot using yt-dlp",
+  "description": "YouTube downloader bot",
   "main": "index.js",
   "type": "module",
   "scripts": {
     "start": "node index.js",
-    "dev": "nodemon index.js",
-    "build": "chmod +x ./scripts/install.sh && ./scripts/install.sh",
-    "test": "echo \"No tests specified\" && exit 0"
+    "build": "mkdir -p bin && curl -L https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -o bin/yt-dlp && chmod +x bin/yt-dlp && npm install --production"
   },
-  "keywords": [
-    "telegram",
-    "bot",
-    "youtube",
-    "downloader",
-    "yt-dlp"
-  ],
-  "author": "Your Name",
-  "license": "MIT",
   "dependencies": {
     "telegram": "^2.25.11",
     "dotenv": "^16.4.5",
@@ -28,11 +17,7 @@
     "@ffmpeg-installer/ffmpeg": "^1.1.0",
     "@ffprobe-installer/ffprobe": "^1.4.1"
   },
-  "devDependencies": {
-    "nodemon": "^3.1.0"
-  },
   "engines": {
-    "node": ">=18.0.0",
-    "npm": ">=9.0.0"
+    "node": "18.x"
   }
 }

@@ -12,7 +12,6 @@ import express from "express";
 import { Innertube } from "youtubei.js";
 import { promisify } from "util";
 import { exec, spawn } from "child_process";
-import channelApiRouter from "./channelApi.js";
 
 const execPromise = promisify(exec);
 
@@ -2469,7 +2468,6 @@ process.on("unhandledRejection", (error) => {
   console.error("❌ Unhandled rejection:", error.message);
 });
 
-app.use("/api", channelApiRouter);
 
 app.get("/", (req, res) => {
   res.send(`

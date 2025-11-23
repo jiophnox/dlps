@@ -7,6 +7,7 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
+    "build": "chmod +x ./scripts/install.sh && ./scripts/install.sh",
     "test": "echo \"No tests specified\" && exit 0"
   },
   "keywords": [
@@ -31,6 +32,7 @@
     "nodemon": "^3.1.0"
   },
   "engines": {
-    "node": ">=18.0.0"
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
   }
 }

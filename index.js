@@ -272,9 +272,40 @@ async function convertToMP3(inputPath, outputPath) {
 // 🚀 ULTRA FAST: Direct yt-dlp Binary Integration
 // ===========================
 
+// ✅ Update getYtDlpPath function in index.js
+
 function getYtDlpPath() {
-  // Check if yt-dlp is available
-  return process.env.YTDLP_PATH || "yt-dlp";
+  // Priority order for Render deployment
+  const possiblePaths = [
+    process.env.YTDLP_PATH, // /opt/render/project/src/bin/yt-dlp
+    path.join(__dirname, 'bin', 'yt-dlp'), // ./bin/yt-dlp
+    '/opt/render/project/src/bin/yt-dlp', // Render absolute path
+    'yt-dlp', // System PATH
+    '/usr/local/bin/yt-dlp',
+    '/usr/bin/yt-dlp',
+  ];
+  
+  for (const p of possiblePaths) {
+    if (!p) continue;
+    
+    try {
+      if (fs.existsSync(p)) {
+        console.log(`✅ Found yt-dlp at: ${p}`);
+        // Make executable
+        try {
+          fs.chmodSync(p, 0o755);
+        } catch (e) {
+          // Ignore chmod errors
+        }
+        return p;
+      }
+    } catch (e) {
+      // Continue checking
+    }
+  }
+  
+  console.log("⚠️ Using default 'yt-dlp' (must be in PATH)");
+  return 'yt-dlp';
 }
 
 async function getVideoInfoFast(url) {
